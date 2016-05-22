@@ -131,91 +131,31 @@ INSERT INTO plot_with_plant(plot_id, plant_id) values
 
 # fill Community Garden with Gardener
 INSERT INTO community_garden_with_gardener(community_id, gardener_id) values
-("1","1"),
-("1","2"),
-("1","3"),
-("1","4"),
-("1","5"),
-("1","6"),
-("2","7"),
-("2","8"),
-("2","9"),
-("2","10"),
-("3","11"),
-("3","12"),
-("4","13"),
-("4","12"),
-("4","11"),
-("4","10"),
-("4","9"),
-("4","8"),
-("5","7"),
-("5","6"),
-("5","5"),
-("5","4"),
-("6","3"),
-("6","2"),
-("6","1"),
-("6","13");
-
-# General Use Queries
-
-# Show all plants grown by gardeners
-SELECT g.fname, g.lname, pa.name FROM gardener g
-INNER JOIN gardener_with_plot gp ON g.gardener_id = gp.gardener_id
-INNER JOIN plot po ON gp.plot_id = po.plot_id
-INNER JOIN plot_with_plant pwp ON po.plot_id = pwp.plot_id
-INNER JOIN plant pa ON pwp.plant_id = pa.plant_id
-ORDER BY g.lname;
-
-# Find all gardeners in the Wilsonville garden
-SELECT g.fname, g.lname FROM gardener g
-INNER JOIN community_garden_with_gardener cgwg ON g.gardener_id = cgwg.gardener_id
-INNER JOIN community_garden cg ON cgwg.community_id = cg.community_id
-WHERE cg.location = "Wilsonville"
-ORDER BY g.lname;
-
-# Find all gardeners growing onions
-SELECT g.fname, g.lname, pa.name FROM gardener g
-INNER JOIN gardener_with_plot gp ON g.gardener_id = gp.gardener_id
-INNER JOIN plot po ON gp.plot_id = po.plot_id
-INNER JOIN plot_with_plant pwp ON po.plot_id = pwp.plot_id
-INNER JOIN plant pa ON pwp.plant_id = pa.plant_id
-WHERE pa.name = "Onion"
-ORDER BY g.lname;
-
-# Find all gardeners with more than one plot
-
-# Find all gardens with roses
-SELECT cg.name, cg.location FROM community_garden cg
-INNER JOIN community_garden_with_gardener cgwg ON cg.community_id = cgwg.community_id
-INNER JOIN gardener g ON cgwg.gardener_id = g.gardener_id
-INNER JOIN gardener_with_plot gwp ON g.gardener_id = gwp.gardener_id
-INNER JOIN plot po ON gwp.plot_id = po.plot_id
-INNER JOIN plot_with_plant pwp ON po.plot_id = pwp.plot_id
-INNER JOIN plant pa ON pwp.plant_id = pa.plant_id
-WHERE pa.name = "Rose"
-ORDER BY cg.location;
-
-#Find all gardeners who tend plot 1 in the Tualatin Hills garden.
-
-SELECT gwp.gardener_id, COUNT(gwp.plot_id) FROM gardener_with_plot gwp GROUP BY gwp.gardener_id;
+((SELECT community_id FROM community_garden WHERE location = "Wilsonville"),(SELECT gardener_id FROM gardener WHERE fname = "Jean-Luc" AND lname = "Picard")),
+((SELECT community_id FROM community_garden WHERE location = "Wilsonville"),(SELECT gardener_id FROM gardener WHERE fname = "William" AND lname = "Riker")),
+((SELECT community_id FROM community_garden WHERE location = "Wilsonville"),(SELECT gardener_id FROM gardener WHERE fname = "James" AND lname = "Kirk")),
+((SELECT community_id FROM community_garden WHERE location = "Wilsonville"),(SELECT gardener_id FROM gardener WHERE fname = "Leonard" AND lname = "McCoy")),
+((SELECT community_id FROM community_garden WHERE location = "Tualatin Hills"),(SELECT gardener_id FROM gardener WHERE fname = "Christine" AND lname = "Chapel")),
+((SELECT community_id FROM community_garden WHERE location = "Tualatin Hills"),(SELECT gardener_id FROM gardener WHERE fname = "Pavel" AND lname = "Chekov")),
+((SELECT community_id FROM community_garden WHERE location = "Tualatin Hills"),(SELECT gardener_id FROM gardener WHERE fname = "Hikaru" AND lname = "Sulu")),
+((SELECT community_id FROM community_garden WHERE location = "Tualatin Hills"),(SELECT gardener_id FROM gardener WHERE fname = "Montgomery" AND lname = "Scott")),
+((SELECT community_id FROM community_garden WHERE location = "Tualatin Hills"),(SELECT gardener_id FROM gardener WHERE fname = "Leonard" AND lname = "McCoy")),
+((SELECT community_id FROM community_garden WHERE location = "Sherwood"),(SELECT gardener_id FROM gardener WHERE fname = "Deanna" AND lname = "Troi")),
+((SELECT community_id FROM community_garden WHERE location = "Sherwood"),(SELECT gardener_id FROM gardener WHERE fname = "Nyota" AND lname = "Uhura")),
+((SELECT community_id FROM community_garden WHERE location = "Sherwood"),(SELECT gardener_id FROM gardener WHERE fname = "Beverly" AND lname = "Crusher")),
+((SELECT community_id FROM community_garden WHERE location = "Beaverton"),(SELECT gardener_id FROM gardener WHERE fname = "Leah" AND lname = "Brahms")),
+((SELECT community_id FROM community_garden WHERE location = "Beaverton"),(SELECT gardener_id FROM gardener WHERE fname = "Geordi" AND lname = "La Forge")),
+((SELECT community_id FROM community_garden WHERE location = "Beaverton"),(SELECT gardener_id FROM gardener WHERE fname = "Nyota" AND lname = "Uhura")),
+((SELECT community_id FROM community_garden WHERE location = "Hillsboro"),(SELECT gardener_id FROM gardener WHERE fname = "Geordi" AND lname = "La Forge")),
+((SELECT community_id FROM community_garden WHERE location = "Hillsboro"),(SELECT gardener_id FROM gardener WHERE fname = "Jean-Luc" AND lname = "Picard")),
+((SELECT community_id FROM community_garden WHERE location = "Hillsboro"),(SELECT gardener_id FROM gardener WHERE fname = "Beverly" AND lname = "Crusher")),
+((SELECT community_id FROM community_garden WHERE location = "Hillsboro"),(SELECT gardener_id FROM gardener WHERE fname = "Deanna" AND lname = "Troi")),
+((SELECT community_id FROM community_garden WHERE location = "Hillsboro"),(SELECT gardener_id FROM gardener WHERE fname = "William" AND lname = "Riker")),
+((SELECT community_id FROM community_garden WHERE location = "Hillsboro"),(SELECT gardener_id FROM gardener WHERE fname = "Christine" AND lname = "Chapel")),
+((SELECT community_id FROM community_garden WHERE location = "Hillsboro"),(SELECT gardener_id FROM gardener WHERE fname = "Leah" AND lname = "Brahms"));
 
 
-
-SELECT gar.gardener_id, gar.fname, gar.lname FROM garener gar INNER JOIN
-(SELECT g.fname, g.lname, g.gardener_id FROM gardener g
-INNER JOIN community_garden_with_gardener cgwg ON cgwg.gardener_id = g.gardener_id
-INNER JOIN community_garden cg ON cgwg.community_id = cg.community_id
-WHERE cg.location = "Tualatin Hills"
-GROUP BY g.lname) AS th_gardener
-ON gar.gardener_id = th_gardener.gardener_id
-INNER JOIN
-(SELECT g.fname, g.lname, g.gardener_id FROM gardener g 
-INNER JOIN gardener_with_plot gwp ON g.gardener_id = gwp.gardener_id
-WHERE gwp.plot_id = 1) AS tends_plot_1
-ON th_gardener.gardener_id = tends_plot_1.gardener_id
-
+#((SELECT community_id FROM community_garden WHERE location = ""),(SELECT gardener_id FROM gardener WHERE fname = "" AND lname = "")),
 
 
 

@@ -54,7 +54,7 @@ CREATE TABLE plot(
 	community int(11),
 	PRIMARY KEY(plot_id),
 	FOREIGN KEY (community) REFERENCES community_garden(community_id)
-	ON DELETE SET NULL
+	ON DELETE CAS
 	ON UPDATE CASCADE
 )ENGINE=InnoDB;
 

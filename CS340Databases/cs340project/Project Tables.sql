@@ -51,21 +51,27 @@ CREATE TABLE community_garden(
 CREATE TABLE plot(
 	plot_id int(11) NOT NULL AUTO_INCREMENT,
 	plot_size int(11), 
-	community int(11),
+	community int(11) NOT NULL,
 	PRIMARY KEY(plot_id),
 	FOREIGN KEY (community) REFERENCES community_garden(community_id)
-	ON DELETE CAS
+	ON DELETE CASCADE
 	ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
 -- gardener_with_plot:
 -- gardener_id - an integer references gardener
 -- plot_id - an integer references plot
+-- community_id - integer referencing community garden
 -- The primary key is a combination of gardener_id and plot_id
 CREATE TABLE gardener_with_plot(
 	gardener_id int(11), 
-	plot_id int(11), 
+	plot_id int(11)
+	community_id int(11), #ALWAYS calculate the value from plot.community
+	# TODO: is there a way to enforce this constraint?
 	FOREIGN KEY (plot_id) REFERENCES plot(plot_id)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+	FOREIGN KEY (community_id) REFERENCES plot(community)
 	ON DELETE CASCADE
 	ON UPDATE CASCADE,
 	FOREIGN KEY (gardener_id) REFERENCES gardener(gardener_id)

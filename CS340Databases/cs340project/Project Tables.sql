@@ -65,18 +65,15 @@ CREATE TABLE plot(
 -- The primary key is a combination of gardener_id and plot_id
 CREATE TABLE gardener_with_plot(
 	gardener_id int(11), 
-	plot_id int(11)
+	plot_id int(11),
 	community_id int(11), #ALWAYS calculate the value from plot.community
 	# TODO: is there a way to enforce this constraint?
 	FOREIGN KEY (plot_id) REFERENCES plot(plot_id)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE,
+	ON DELETE CASCADE,
 	FOREIGN KEY (community_id) REFERENCES plot(community)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE,
+	ON DELETE CASCADE,
 	FOREIGN KEY (gardener_id) REFERENCES gardener(gardener_id)
-	ON DELETE CASCADE
-	ON UPDATE CASCADE,
+	ON DELETE CASCADE,
 	PRIMARY KEY (gardener_id,plot_id)
 )ENGINE=InnoDB;
 

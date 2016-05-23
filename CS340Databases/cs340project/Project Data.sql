@@ -89,12 +89,12 @@ INSERT INTO plant(name) values
 ("Pothos"),
 ("Spider Plant");
 
-# fill Gardeners with Plots
-INSERT INTO gardener_with_plot(gardener_id, plot_id) values
+# fill Gardeners with Plots BROKEN
+INSERT INTO gardener_with_plot(gardener_id, plot_id, community_id) values
 #((SELECT g.gardener_id FROM gar g WHERE g.fname = "" AND g.lname = ""), ""),
-((SELECT g.gardener_id FROM gardener g WHERE g.fname = "Jean-Luc" AND g.lname = "Picard"), "1"),
-((SELECT g.gardener_id FROM gardener g WHERE g.fname = "Jean-Luc" AND g.lname = "Picard"), "2"),
-((SELECT g.gardener_id FROM gardener g WHERE g.fname = "Jean-Luc" AND g.lname = "Picard"), "3"),
+((SELECT g.gardener_id FROM gardener g WHERE g.fname = "Jean-Luc" AND g.lname = "Picard"), "1", (SELECT po.community FROM plot po WHERE po.plot_id = "1")),
+((SELECT g.gardener_id FROM gardener g WHERE g.fname = "Jean-Luc" AND g.lname = "Picard"), "2", (SELECT po.community FROM plot po WHERE po.plot_id = "2")),
+((SELECT g.gardener_id FROM gardener g WHERE g.fname = "Jean-Luc" AND g.lname = "Picard"), "3", (SELECT po.community FROM plot po WHERE po.plot_id = "3")),
 
 ((SELECT g.gardener_id FROM gardener g WHERE g.fname = "" AND g.lname = ""), ""),
 ((SELECT g.gardener_id FROM gardener g WHERE g.fname = "" AND g.lname = ""), ""),
@@ -115,7 +115,7 @@ INSERT INTO gardener_with_plot(gardener_id, plot_id) values
 ("3","11");
 
 
-# fill Plots with plants
+# fill Plots with plants -- Blocked by issue plaguing gardener_with_plot
 INSERT INTO plot_with_plant(plot_id, plant_id) values
 ("1", "20"),
 ("2", "19"),
